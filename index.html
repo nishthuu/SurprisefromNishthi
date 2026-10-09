@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Is it a realisation?? 💭</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Quicksand, Caveat, and Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Quicksand"', 'sans-serif'],
+            handwriting: ['"Caveat"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            softBeige: '#FDFBF7',
+            warmSand: '#F5EFEB',
+            caramelBrown: '#5C3D2E',
+            deepBrown: '#3E2723',
+            babyBlue: '#D8ECF8',
+            babyBlueDark: '#6BA4B8',
+            pastelPink: '#FFE5EC',
+            vibrantPink: '#F472B6',
+            heartPink: '#FB7185',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5EFEB;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E8B4B8;
+      border-radius: 9999px;
+    }
+
+    /* Ambient Background Pattern */
+    .bg-cute-dots {
+      background-color: #FDFBF7;
+      background-image: 
+        radial-gradient(#EADBC8 0.95px, transparent 0.95px),
+        radial-gradient(#FBCFE8 0.95px, #FDFBF7 0.95px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    /* Gentle Floating Animation */
+    @keyframes gentleBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-bob {
+      animation: gentleBob 3.5s ease-in-out infinite;
+    }
+
+    /* Heartbeat Animation for Pink Heart Button */
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1.02); }
+      42% { transform: scale(1.18); }
+      70% { transform: scale(1); }
+    }
+    .animate-heart-pulse {
+      animation: heartPulse 1.8s infinite;
+    }
+
+    /* Angry Shake Effect */
+    @keyframes angryWobble {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      15% { transform: translate(-8px, 2px) rotate(-4deg); }
+      30% { transform: translate(8px, -2px) rotate(4deg); }
+      45% { transform: translate(-6px, -2px) rotate(-2deg); }
+      60% { transform: translate(6px, 2px) rotate(2deg); }
+      75% { transform: translate(-3px, 1px) rotate(-1deg); }
+    }
+    .shake-angry {
+      animation: angryWobble 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    /* 3D Envelope Styles */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .envelope-flap.open {
+      transform: rotateX(180deg);
+      z-index: 5;
+    }
+
+    /* Stationery Paper Glow & Texture */
+    .letter-paper {
+      background-color: #FFFDF9;
+      background-image: repeating-linear-gradient(#FFFDF9 0px, #FFFDF9 30px, #EFE2D3 31px);
+      box-shadow: 0 15px 35px -5px rgba(92, 61, 46, 0.18), inset 0 0 40px rgba(228, 203, 174, 0.25);
+    }
+  </style>
+</head>
+
+<body class="bg-cute-dots text-caramelBrown font-sans antialiased min-h-screen selection:bg-pastelPink selection:text-deepBrown relative overflow-x-hidden">
+
+  <!-- Floating Sparkles/Hearts Ambient Canvas -->
+  <canvas id="floatingCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Sound Toggle Indicator (Web Audio generated, zero external audio lag) -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="soundToggle" class="px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-pink-200 shadow-sm text-xs font-semibold text-deepBrown flex items-center gap-1.5 hover:bg-white hover:scale-105 transition-all">
+      <span id="soundIcon">🔊</span>
+      <span id="soundLabel">Sound On</span>
+    </button>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- 1. HERO SECTION                                      -->
+  <!-- ==================================================== -->
+  <section id="heroSection" class="min-h-screen relative z-10 flex flex-col items-center justify-center text-center px-4 py-12 transition-opacity duration-700">
+    <div class="max-w-xl mx-auto space-y-6 animate-bob">
+
+      <!-- Top Text: Your Bachhuuuuuuuuuuuuu has got smtg to say -->
+      <div class="inline-block px-5 py-2 rounded-full bg-pastelPink/80 border border-pink-200/90 shadow-sm backdrop-blur-sm">
+        <p class="text-sm sm:text-base font-semibold text-deepBrown tracking-wide">
+          Your Bachhuuuuuuuuuuuuu has got smtg to say 🥺✨
+        </p>
+      </div>
+
+      <!-- Main Big Heading: Is it a realisation?? 💭 -->
+      <div class="space-y-3 pt-2">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-deepBrown tracking-tight leading-tight">
+          Is it a <span class="italic font-serif text-heartPink underline decoration-pink-300 decoration-wavy decoration-2">realisation</span>?? 💭
+        </h1>
+        
+        <!-- Subtext: IDKK might be but we aren't overthinking -->
+        <p class="text-base sm:text-lg md:text-xl font-medium text-caramelBrown/90">
+          IDKK might be but we aren't overthinking 🙈🌸
+        </p>
+      </div>
+
+      <!-- Cute Scroll Down Button with Pink Bow on top of Down Arrow -->
+      <div class="pt-8 flex flex-col items-center justify-center">
+        <button id="btnScrollDown" class="group flex flex-col items-center focus:outline-none transition-transform hover:scale-110 active:scale-95" title="Click to scroll down">
+          <div class="relative flex flex-col items-center">
+            <!-- Pink Bow -->
+            <span class="text-3xl filter drop-shadow-sm transform -mb-1 group-hover:rotate-6 transition-transform">🎀</span>
+            <!-- Downward Arrow with gentle bounce -->
+            <div class="w-10 h-10 rounded-full bg-white/90 border border-pink-200 flex items-center justify-center shadow-md text-heartPink text-xl font-bold group-hover:bg-pastelPink transition-colors">
+              <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-caramelBrown/80 mt-2 tracking-wider uppercase">Scroll Down</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- 2. OPTIONS SECTION                                   -->
+  <!-- ==================================================== -->
+  <section id="optionsSection" class="min-h-screen relative z-10 flex flex-col items-center justify-center px-4 py-16">
+    <div class="max-w-lg w-full bg-white/80 backdrop-blur-md border-2 border-pink-100 rounded-3xl p-6 sm:p-10 shadow-xl shadow-pink-100/50 text-center space-y-8">
+      
+      <!-- Section Header -->
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-babyBlueDark bg-babyBlue/60 px-3 py-1 rounded-full">Honesty Check</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-deepBrown pt-2">
+          Choose the right option to know ✨
+        </h2>
+        <p class="text-sm text-caramelBrown/80">Think very carefully before you tap... 👀</p>
+      </div>
+
+      <!-- The Two Options -->
+      <div class="space-y-4 pt-2">
+        <!-- Option 1 (Correct) -->
+        <button id="btnOption1" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-pastelPink to-pink-100 hover:from-pink-200 hover:to-pastelPink border-2 border-pink-300/80 text-deepBrown font-bold text-base sm:text-lg shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+          <span>M nahati hooonnnn</span>
+          <span class="text-xl">🥺</span>
+        </button>
+
+        <!-- Option 2 (Wrong) -->
+        <button id="btnOption2" class="w-full py-4 px-6 rounded-2xl bg-warmSand/70 hover:bg-rose-50 border-2 border-amber-200 text-deepBrown font-bold text-base sm:text-lg shadow-sm hover:shadow-md hover:scale-[0.98] active:scale-95 transition-all flex items-center justify-center gap-3">
+          <span>M nhi nahati hoon</span>
+          <span class="text-xl">💀</span>
+        </button>
+      </div>
+
+      <div class="pt-2 text-xs text-caramelBrown/60 flex items-center justify-center gap-1.5">
+        <span>🎀</span>
+        <span>Choose wisely or face consequences</span>
+        <span>🎀</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- 3. WRONG OPTION MODAL (CAT 1: Angry Gun Cat)        -->
+  <!-- ==================================================== -->
+  <div id="wrongModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="wrongModalCard" class="max-w-sm w-full bg-[#FFFDF9] border-2 border-rose-300 rounded-3xl p-6 text-center shadow-2xl relative overflow-hidden">
+      
+      <!-- Pastel ribbon badge -->
+      <div class="absolute top-3 right-3 text-2xl select-none">🎀</div>
+
+      <!-- Cat 1 Image Container -->
+      <div class="w-56 h-56 mx-auto rounded-2xl overflow-hidden bg-rose-50 border-2 border-rose-200 flex items-center justify-center shadow-inner">
+        <img 
+          src="cat1.jpg" 
+          id="cat1Img"
+          alt="Angry Cat with Gun and Bow" 
+          class="w-full h-full object-contain"
+          onerror="handleImageFallback(this, 'cat1')"
+        />
+      </div>
+
+      <!-- Angry text -->
+      <div class="space-y-2 mt-5">
+        <h3 class="text-xl sm:text-2xl font-extrabold text-red-600 tracking-tight">
+          I dare u to say it again😡
+        </h3>
+        <p class="text-xs sm:text-sm text-caramelBrown font-medium">
+          How dare you even look at that option?! 🔫😾
+        </p>
+      </div>
+
+      <!-- Apology Button to go back -->
+      <div class="mt-6">
+        <button id="btnSorry" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-heartPink to-vibrantPink hover:opacity-95 text-white font-bold text-sm tracking-wide shadow-lg shadow-pink-300/50 hover:scale-[1.02] active:scale-95 transition-all">
+          sorry bacchu I will choose the right option 🥺💖
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- 4. GOOD BOY SECTION (CAT 2: Tulips Cat)             -->
+  <!-- ==================================================== -->
+  <section id="goodBoySection" class="min-h-screen relative z-10 hidden flex-col items-center justify-center px-4 py-12 transition-all duration-500">
+    <div class="max-w-md w-full bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 sm:p-8 shadow-xl text-center space-y-6 animate-bob">
+
+      <!-- Cat 2 Image (Tulips and Pink Bow) -->
+      <div class="w-56 h-56 mx-auto rounded-2xl overflow-hidden bg-pink-50 border-2 border-pink-200 flex items-center justify-center shadow-md">
+        <img 
+          src="cat2.jpg" 
+          id="cat2Img"
+          alt="Cat holding tulips with pink bow" 
+          class="w-full h-full object-contain"
+          onerror="handleImageFallback(this, 'cat2')"
+        />
+      </div>
+
+      <!-- Good Boy Heading -->
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-babyBlue/60 text-babyBlueDark text-xs font-bold uppercase tracking-wider">
+          <span>✨</span>
+          <span>Correct Answer</span>
+          <span>✨</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-deepBrown pt-1 font-serif">
+          good boy 🌷
+        </h2>
+        <p class="text-sm text-caramelBrown/80">
+          See? That was not so hard, was it? Now for the secret...
+        </p>
+      </div>
+
+      <!-- Pink Heart Button: Click on me 💗 -->
+      <div class="pt-2">
+        <button id="btnPinkHeart" class="animate-heart-pulse inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-gradient-to-r from-pink-400 via-rose-400 to-heartPink text-white font-bold text-lg shadow-lg shadow-rose-300/60 hover:shadow-rose-400/80 hover:scale-105 active:scale-95 transition-all">
+          <span>Click on me</span>
+          <span class="text-2xl">💗</span>
+        </button>
+      </div>
+
+      <!-- Cute Go Back Option -->
+      <div class="pt-1">
+        <button id="btnBackFromGoodBoy" class="text-xs sm:text-sm font-semibold text-caramelBrown/70 hover:text-heartPink transition-all inline-flex items-center gap-1.5 py-1.5 px-4 rounded-full hover:bg-pink-100/60 border border-transparent hover:border-pink-200">
+          <span>←</span>
+          <span>Wait, take me back 🐾</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- 5. PASSWORD GATE MODAL & WRONG PASSWORD MODAL (CAT 3)-->
+  <!-- ==================================================== -->
+  
+  <!-- Password Input Modal -->
+  <div id="passwordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div class="max-w-md w-full bg-[#FFFDF9] border-2 border-pink-200 rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative space-y-6">
+      
+      <!-- Top Decor -->
+      <div class="w-14 h-14 mx-auto rounded-full bg-pink-100 flex items-center justify-center text-2xl shadow-inner">
+        🔐
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-2xl font-bold text-deepBrown">
+          Enter The Secret Password
+        </h3>
+        <!-- Password Hint -->
+        <p class="text-xs sm:text-sm font-semibold text-heartPink bg-pastelPink/60 py-1.5 px-4 rounded-full inline-block border border-pink-200">
+          Hint: Ur New Fav Person's D-Day 🎂✨
+        </p>
+        <p class="text-xs text-caramelBrown/70">
+          Enter date (e.g. DD/MM or DDMM or DD Month)
+        </p>
+      </div>
+
+      <!-- Password Input Form -->
+      <form id="passwordForm" class="space-y-4" onsubmit="event.preventDefault(); checkPassword();">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="passwordInput" 
+            placeholder="Type your answer here..." 
+            autocomplete="off"
+            class="w-full px-5 py-3.5 rounded-2xl border-2 border-pink-200 focus:border-heartPink focus:ring-4 focus:ring-pink-100 outline-none text-center text-deepBrown font-bold text-lg tracking-wider placeholder:text-stone-300 placeholder:font-normal bg-white"
+          />
+        </div>
+
+        <div class="flex gap-3">
+          <button type="button" id="btnCancelPassword" class="w-1/3 py-3 rounded-xl bg-warmSand hover:bg-stone-200 text-caramelBrown font-semibold text-sm transition-all">
+            Back
+          </button>
+          <button type="submit" id="btnSubmitPassword" class="w-2/3 py-3 rounded-xl bg-gradient-to-r from-heartPink to-vibrantPink text-white font-bold text-sm shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
+            Unlock 🎀
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Cat 3: Wrong Password Warning ("pitti kr dungi 😡") -->
+  <div id="wrongPasswordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="wrongPasswordCard" class="max-w-sm w-full bg-[#FFFDF9] border-2 border-red-300 rounded-3xl p-6 text-center shadow-2xl relative space-y-4">
+      
+      <!-- Cat 3 Image Container (Knife kitten) -->
+      <div class="w-52 h-52 mx-auto rounded-2xl overflow-hidden bg-rose-50 border-2 border-rose-200 flex items-center justify-center shadow-inner">
+        <img 
+          src="cat3.jpg" 
+          id="cat3Img"
+          alt="Cat with knife pitti kr dungi" 
+          class="w-full h-full object-contain"
+          onerror="handleImageFallback(this, 'cat3')"
+        />
+      </div>
+
+      <div class="space-y-1">
+        <h4 class="text-xl sm:text-2xl font-extrabold text-red-600">
+          pitti kr dungi 😡
+        </h4>
+        <p class="text-sm font-bold text-deepBrown">
+          Galat jawab! Try again! 🔪😾
+        </p>
+        <p class="text-xs text-caramelBrown/70">
+          Think about the hint again carefully!
+        </p>
+      </div>
+
+      <button id="btnTryAgain" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-sm shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+        Try Again 🥺🙏
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- 6. PASSWORD SUCCESS (CAT 4: Judge Approved!) & ENVELOPE -->
+  <!-- ==================================================== -->
+  <section id="successSection" class="min-h-screen relative z-10 hidden flex-col items-center justify-center px-4 py-16 transition-all duration-700">
+    <div class="max-w-lg w-full text-center space-y-8">
+
+      <!-- Cat 4 Approved! -->
+      <div id="approvedContainer" class="space-y-4">
+        <div class="w-48 h-48 sm:w-56 sm:h-56 mx-auto rounded-3xl overflow-hidden bg-white/90 border-2 border-amber-200 shadow-xl flex items-center justify-center">
+          <img 
+            src="cat4.png" 
+            id="cat4Img"
+            alt="Cat Judge Approved" 
+            class="w-full h-full object-contain"
+            onerror="handleImageFallback(this, 'cat4')"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-3xl sm:text-5xl font-black text-deepBrown tracking-wider font-sans uppercase animate-bounce">
+            FINALLLLLLYYYYYYYYY 🎉
+          </h2>
+          <p class="text-sm sm:text-base font-semibold text-caramelBrown">
+            You made it! Your secret letter has arrived... 💌
+          </p>
+        </div>
+      </div>
+
+      <!-- Pop-up 3D Envelope -->
+      <div id="envelopeWrapper" class="envelope-wrapper pt-4 flex flex-col items-center cursor-pointer group">
+        
+        <!-- Instruction Label -->
+        <span class="text-xs uppercase tracking-widest font-bold text-heartPink bg-pastelPink/90 px-4 py-1.5 rounded-full border border-pink-200 shadow-sm mb-4 group-hover:scale-105 transition-transform">
+          Tap the envelope to open 💌
+        </span>
+
+        <!-- The Physical Envelope Graphics -->
+        <div id="envelopeElement" class="relative w-72 sm:w-80 h-48 sm:h-52 bg-[#F6ECE0] rounded-2xl border-2 border-[#E3D1BE] shadow-2xl flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:shadow-pink-200/60 group-hover:-translate-y-1">
+          
+          <!-- Envelope Back & Shadow Details -->
+          <div class="absolute inset-0 bg-[#EFE3D3]"></div>
+
+          <!-- Letter Paper Peeking Out Behind Flap -->
+          <div id="letterPeek" class="absolute w-60 sm:w-68 h-36 bg-[#FFFDF9] rounded-xl border border-stone-200 shadow-md top-6 transition-all duration-700 transform">
+            <div class="p-3 text-left space-y-1 opacity-70">
+              <div class="h-2 w-20 bg-pink-200 rounded"></div>
+              <div class="h-2 w-44 bg-stone-200 rounded"></div>
+              <div class="h-2 w-36 bg-stone-200 rounded"></div>
+            </div>
+          </div>
+
+          <!-- Bottom & Side Flaps -->
+          <div class="absolute inset-0 pointer-events-none">
+            <!-- Left Fold -->
+            <div class="absolute inset-0 border-l-[140px] sm:border-l-[160px] border-l-[#E8DAC8]/70 border-y-[96px] sm:border-y-[104px] border-y-transparent"></div>
+            <!-- Right Fold -->
+            <div class="absolute inset-0 border-r-[140px] sm:border-r-[160px] border-r-[#E4D5C2]/70 border-y-[96px] sm:border-y-[104px] border-y-transparent"></div>
+            <!-- Bottom Fold -->
+            <div class="absolute bottom-0 inset-x-0 border-b-[100px] sm:border-b-[115px] border-b-[#DECFBC] border-x-[140px] sm:border-x-[160px] border-x-transparent"></div>
+          </div>
+
+          <!-- Top Fold / Flap (With Wax Seal) -->
+          <div id="envelopeFlap" class="envelope-flap absolute top-0 inset-x-0 h-28 border-t-[100px] sm:border-t-[115px] border-t-[#D6C4AE] border-x-[140px] sm:border-x-[160px] border-x-transparent z-20"></div>
+
+          <!-- Pink Wax Seal with Heart -->
+          <div id="waxSeal" class="absolute z-30 w-12 h-12 rounded-full bg-gradient-to-tr from-rose-500 to-pink-400 border-2 border-pink-200 shadow-md flex items-center justify-center text-white text-lg font-bold transition-transform group-hover:scale-110">
+            💖
+          </div>
+
+        </div>
+
+        <p class="text-xs text-caramelBrown/60 mt-4 italic">
+          (A burst of love is waiting inside!)
+        </p>
+
+      </div>
+
+      <!-- Navigation buttons to go back from Envelope / Approved screen -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
+        <button id="btnBackFromSuccess" class="px-5 py-2.5 rounded-full bg-white/90 hover:bg-pink-50 border border-pink-200 shadow-sm text-xs sm:text-sm font-semibold text-deepBrown hover:text-heartPink transition-all flex items-center gap-2 hover:scale-105 active:scale-95">
+          <span>←</span>
+          <span>Go back 🐾</span>
+        </button>
+        <button id="btnResetToStartFromSuccess" class="px-5 py-2.5 rounded-full bg-warmSand/80 hover:bg-amber-100 border border-amber-200 shadow-sm text-xs sm:text-sm font-semibold text-caramelBrown transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95">
+          <span>🔄</span>
+          <span>Start from beginning</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- 7. THE SECRET LETTER DISPLAY MODAL                   -->
+  <!-- ==================================================== -->
+  <div id="letterModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-md hidden opacity-0 transition-opacity duration-500 overflow-y-auto">
+    <div id="letterContainer" class="max-w-2xl w-full my-auto letter-paper rounded-3xl p-6 sm:p-12 border-4 border-[#EADAC7] shadow-2xl relative transform scale-95 transition-transform duration-500">
+      
+      <!-- Top Decorative Ribbon & Stamps -->
+      <div class="flex items-center justify-between border-b border-[#EADAC7] pb-4 mb-6">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🎀</span>
+          <span class="font-handwriting text-2xl text-caramelBrown font-bold">Personal & Confidential</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-12 rounded border-2 border-dashed border-rose-300 bg-rose-50 flex items-center justify-center text-xs text-rose-500 font-bold rotate-6">
+            💌
+          </div>
+          <button id="btnCloseLetter" class="w-8 h-8 rounded-full bg-warmSand hover:bg-pink-100 flex items-center justify-center text-caramelBrown hover:text-heartPink font-bold text-lg transition-colors" title="Close">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Letter Body Content -->
+      <div class="space-y-5 text-caramelBrown">
+        
+        <!-- Salutation -->
+        <div class="font-handwriting text-3xl sm:text-4xl text-deepBrown font-bold tracking-wide">
+          To my (or not mine yet) Shady Guy,
+        </div>
+
+        <!-- The Main Text -->
+        <div id="letterContent" class="font-handwriting text-2xl sm:text-3xl leading-relaxed text-[#4A332D] space-y-4">
+          <p>
+            IDK if it's right or if I'm right. This is very new and surprisingly not feeling weird, wrong or uncomfortable. Tbh I never expected that smtg like this would happen or could even happen. But looks like it's real.
+          </p>
+          
+          <p>
+            I think I'm genuinely interested in you like sach m. It's new, raw and Idk how to exactly express it but Jayant I genuinely wanna give it a shot. I wanna try to understand u understand us and see how it goes.
+          </p>
+
+          <p>
+            Alr I'm not gonna write an essay but jus so uk I'm really interested in you now, not jus thodu sa.
+          </p>
+
+          <p>
+            Heads up!!Jus to lyk I will overthink and ask u stupid questions, but u can't call em stupid. 😤
+          </p>
+
+          <div class="my-4 p-4 rounded-2xl bg-pink-100/70 border border-pink-200 text-center shadow-inner">
+            <p class="font-handwriting text-2xl sm:text-3xl font-extrabold text-heartPink tracking-wide">
+              Andddddd &ldquo;M NAHATI HOOOOON SACHHHIIII&rdquo; 🫧🧼🚿
+            </p>
+          </div>
+        </div>
+
+        <!-- Signature -->
+        <div class="pt-4 flex flex-col items-end text-right">
+          <p class="font-handwriting text-2xl sm:text-3xl text-deepBrown font-bold">
+            With a raw attempt at understanding u,
+          </p>
+          <p class="font-handwriting text-3xl sm:text-4xl text-heartPink font-bold flex items-center gap-2 mt-1">
+            Nishtha Bachhuuuuuu 🎀✨
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Action & Navigation Controls at the bottom of the letter -->
+      <div class="mt-8 pt-6 border-t border-[#EADAC7] space-y-4">
+        <!-- Main Navigation: Fold & Go Back / Replay -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button id="btnFoldLetter" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-heartPink to-vibrantPink hover:opacity-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-pink-200/60 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95">
+            <span>💌</span>
+            <span>Fold letter & go back</span>
+          </button>
+          
+          <button id="btnReplayFromLetter" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white/90 hover:bg-pink-50 border-2 border-pink-200 text-deepBrown font-bold text-sm sm:text-base shadow-sm transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95">
+            <span>🐾</span>
+            <span>Replay from start</span>
+          </button>
+        </div>
+
+        <!-- Secondary options row -->
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-caramelBrown/70 pt-2">
+          <div class="flex items-center gap-2">
+            <span>✨</span>
+            <span>Made with love for you</span>
+          </div>
+          <button id="btnEditLetter" class="px-3 py-1.5 rounded-full bg-white hover:bg-pink-50 border border-pink-200 text-deepBrown font-medium transition-colors">
+            ✏️ Edit Letter Content
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- JAVASCRIPT LOGIC, AUDIO SYNTHESIS & INTERACTIONS    -->
+  <!-- ==================================================== -->
+  <script>
+    /* ===================================================
+       CONFIGURATION & PASSWORDS
+       You can add or change any password variations here!
+       =================================================== */
+    const CONFIG = {
+      // Valid password answers (all normalized to lowercase without spaces)
+      validPasswords: [
+        '24/05', '2405', '24-05', '24may', 'may24', '24thmay', 
+        '24th', 'dday', 'birthday', 'fav', '24'
+      ],
+      defaultLetterText: "The content of the letter will be given by me later."
+    };
+
+    /* ===================================================
+       WEB AUDIO API: CUTE RETRO & SPARKLE SOUND EFFECTS
+       (Generates all audio on the fly - 100% reliable)
+       =================================================== */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    const Sound = {
+      playCuteBoing() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(450, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(780, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.22);
+        } catch(e){}
+      },
+
+      playBuzzer() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, ctx.currentTime);
+          osc.frequency.setValueAtTime(120, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.35);
+        } catch(e){}
+      },
+
+      playSuccessChime() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+          notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            const startTime = ctx.currentTime + (idx * 0.08);
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.18, startTime + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + 0.42);
+          });
+        } catch(e){}
+      },
+
+      playGavelThud() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(140, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.18);
+          gain.gain.setValueAtTime(0.4, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.2);
+        } catch(e){}
+      },
+
+      playLetterOpenHarp() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          const arpeggio = [440, 554.37, 659.25, 880, 1108.73, 1318.51];
+          arpeggio.forEach((note, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = note;
+            const t = ctx.currentTime + (i * 0.06);
+            gain.gain.setValueAtTime(0, t);
+            gain.gain.linearRampToValueAtTime(0.15, t + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.65);
+          });
+        } catch(e){}
+      }
+    };
+
+    // Sound toggle button listener
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundLabel = document.getElementById('soundLabel');
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
+      soundLabel.textContent = soundEnabled ? 'Sound On' : 'Sound Off';
+      if (soundEnabled) Sound.playCuteBoing();
+    });
+
+    /* ===================================================
+       FALLBACK GRAPHICS GENERATOR (HIGH QUALITY SVGs)
+       If image files cat1.jpg, cat2.jpg, cat3.jpg, cat4.png
+       are not loaded yet, these display matching cute art!
+       =================================================== */
+    function handleImageFallback(imgElement, type) {
+      if (type === 'cat1') {
+        imgElement.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <rect width="200" height="200" fill="#FFF5F7"/>
+            <circle cx="100" cy="115" r="55" fill="#E6D3C1"/>
+            <polygon points="60,80 75,40 95,75" fill="#E6D3C1"/>
+            <polygon points="140,80 125,40 105,75" fill="#E6D3C1"/>
+            <polygon points="65,75 75,48 90,72" fill="#FFC0CB"/>
+            <polygon points="135,75 125,48 110,72" fill="#FFC0CB"/>
+            <!-- Blue ribbon -->
+            <path d="M60,65 Q70,55 80,65 Q70,75 60,65 Z" fill="#90CAF9"/>
+            <circle cx="70" cy="65" r="4" fill="#64B5F6"/>
+            <!-- Face -->
+            <ellipse cx="85" cy="110" rx="6" ry="8" fill="#2E1C14"/>
+            <ellipse cx="115" cy="110" rx="6" ry="8" fill="#2E1C14"/>
+            <ellipse cx="100" cy="120" rx="4" ry="3" fill="#E57373"/>
+            <!-- Tongue -->
+            <path d="M96,124 Q100,135 104,124 Z" fill="#F06292"/>
+            <!-- Gun in hand -->
+            <rect x="135" y="115" width="30" height="15" rx="3" fill="#424242"/>
+            <rect x="135" y="125" width="12" height="20" rx="2" fill="#303030"/>
+            <circle cx="160" cy="122" r="5" fill="#212121"/>
+          </svg>
+        `);
+      } else if (type === 'cat2') {
+        imgElement.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <rect width="200" height="200" fill="#FFF5FA"/>
+            <circle cx="100" cy="115" r="55" fill="#EFE5DB"/>
+            <polygon points="60,80 75,40 95,75" fill="#EFE5DB"/>
+            <polygon points="140,80 125,40 105,75" fill="#EFE5DB"/>
+            <!-- Pink bow -->
+            <path d="M125,60 Q135,50 145,60 Q135,70 125,60 Z" fill="#F48FB1"/>
+            <circle cx="135" cy="60" r="4" fill="#F06292"/>
+            <!-- Sweet face -->
+            <ellipse cx="85" cy="110" rx="6" ry="8" fill="#2E1C14"/>
+            <ellipse cx="115" cy="110" rx="6" ry="8" fill="#2E1C14"/>
+            <path d="M97,122 Q100,126 103,122" stroke="#E57373" stroke-width="2" fill="none"/>
+            <!-- Pink Tulips Bouquet -->
+            <path d="M50,110 Q60,95 70,110 Q60,125 50,110 Z" fill="#F06292"/>
+            <path d="M60,105 Q70,90 80,105 Q70,120 60,105 Z" fill="#F48FB1"/>
+            <rect x="62" y="115" width="4" height="25" fill="#81C784"/>
+          </svg>
+        `);
+      } else if (type === 'cat3') {
+        imgElement.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <rect width="200" height="200" fill="#FFF0F0"/>
+            <circle cx="100" cy="115" r="55" fill="#E0D3C3"/>
+            <polygon points="60,80 75,45 95,75" fill="#E0D3C3"/>
+            <polygon points="140,80 125,45 105,75" fill="#E0D3C3"/>
+            <!-- Small pink bow -->
+            <circle cx="125" cy="60" r="5" fill="#F48FB1"/>
+            <!-- Big round angry eyes -->
+            <circle cx="85" cy="110" r="9" fill="#1A1A1A"/>
+            <circle cx="115" cy="110" r="9" fill="#1A1A1A"/>
+            <circle cx="87" cy="108" r="3" fill="#FFFFFF"/>
+            <circle cx="117" cy="108" r="3" fill="#FFFFFF"/>
+            <!-- Knife -->
+            <polygon points="45,90 60,80 60,135 45,135" fill="#B0BEC5"/>
+            <rect x="47" y="135" width="10" height="20" rx="2" fill="#37474F"/>
+            <text x="100" y="180" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle" fill="#D32F2F">pitti kr dungi 😡</text>
+          </svg>
+        `);
+      } else if (type === 'cat4') {
+        imgElement.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <rect width="200" height="200" fill="#FFFBF0"/>
+            <circle cx="100" cy="110" r="55" fill="#F5EBE1"/>
+            <!-- Cat with gavel -->
+            <ellipse cx="85" cy="105" rx="7" ry="9" fill="#2E1C14"/>
+            <ellipse cx="115" cy="105" rx="7" ry="9" fill="#2E1C14"/>
+            <!-- Wooden Gavel -->
+            <rect x="110" y="125" width="35" height="16" rx="3" fill="#6D4C41"/>
+            <rect x="122" y="140" width="8" height="25" rx="2" fill="#8D6E63"/>
+            <ellipse cx="127" cy="170" rx="25" ry="8" fill="#5D4037"/>
+            <text x="100" y="45" font-family="sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="#3E2723">Approved!</text>
+          </svg>
+        `);
+      }
+    }
+
+    /* ===================================================
+       PAGE INTERACTION & TRANSITION LOGIC
+       =================================================== */
+    const heroSection = document.getElementById('heroSection');
+    const optionsSection = document.getElementById('optionsSection');
+    const btnScrollDown = document.getElementById('btnScrollDown');
+
+    const btnOption1 = document.getElementById('btnOption1');
+    const btnOption2 = document.getElementById('btnOption2');
+    
+    const wrongModal = document.getElementById('wrongModal');
+    const wrongModalCard = document.getElementById('wrongModalCard');
+    const btnSorry = document.getElementById('btnSorry');
+
+    const goodBoySection = document.getElementById('goodBoySection');
+    const btnPinkHeart = document.getElementById('btnPinkHeart');
+    const btnBackFromGoodBoy = document.getElementById('btnBackFromGoodBoy');
+
+    const passwordModal = document.getElementById('passwordModal');
+    const btnCancelPassword = document.getElementById('btnCancelPassword');
+    const passwordInput = document.getElementById('passwordInput');
+
+    const wrongPasswordModal = document.getElementById('wrongPasswordModal');
+    const wrongPasswordCard = document.getElementById('wrongPasswordCard');
+    const btnTryAgain = document.getElementById('btnTryAgain');
+
+    const successSection = document.getElementById('successSection');
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    const envelopeFlap = document.getElementById('envelopeFlap');
+    const letterPeek = document.getElementById('letterPeek');
+    const waxSeal = document.getElementById('waxSeal');
+
+    const letterModal = document.getElementById('letterModal');
+    const letterContainer = document.getElementById('letterContainer');
+    const btnCloseLetter = document.getElementById('btnCloseLetter');
+    const btnEditLetter = document.getElementById('btnEditLetter');
+    const userLetterText = document.getElementById('userLetterText');
+    const btnFoldLetter = document.getElementById('btnFoldLetter');
+    const btnReplayFromLetter = document.getElementById('btnReplayFromLetter');
+    const btnBackFromSuccess = document.getElementById('btnBackFromSuccess');
+    const btnResetToStartFromSuccess = document.getElementById('btnResetToStartFromSuccess');
+
+    // 1. Scroll Down Button (From Hero to Options)
+    btnScrollDown.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      optionsSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // 2. Option 2 clicked: WRONG CHOICE -> Angry Cat 1 Modal
+    btnOption2.addEventListener('click', () => {
+      Sound.playBuzzer();
+      wrongModal.classList.remove('hidden');
+      setTimeout(() => {
+        wrongModal.classList.remove('opacity-0');
+        wrongModalCard.classList.add('shake-angry');
+      }, 20);
+    });
+
+    // Apology Button on Cat 1 Modal: Goes back to options
+    btnSorry.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      wrongModal.classList.add('opacity-0');
+      setTimeout(() => {
+        wrongModal.classList.add('hidden');
+        wrongModalCard.classList.remove('shake-angry');
+        // Scroll back cleanly to options
+        optionsSection.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    });
+
+    // 3. Option 1 clicked: RIGHT CHOICE -> "good boy" Screen (Cat 2)
+    btnOption1.addEventListener('click', () => {
+      Sound.playSuccessChime();
+      // Hide hero and options, reveal goodBoySection smoothly
+      heroSection.classList.add('hidden');
+      optionsSection.classList.add('hidden');
+      goodBoySection.classList.remove('hidden');
+      goodBoySection.classList.add('flex');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Go back from Good Boy screen to Options
+    btnBackFromGoodBoy.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      goodBoySection.classList.add('hidden');
+      goodBoySection.classList.remove('flex');
+      heroSection.classList.remove('hidden');
+      optionsSection.classList.remove('hidden');
+      optionsSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // 4. Pink Heart Button clicked -> Opens Password Modal
+    btnPinkHeart.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      passwordModal.classList.remove('hidden');
+      setTimeout(() => {
+        passwordModal.classList.remove('opacity-0');
+        passwordInput.focus();
+      }, 20);
+    });
+
+    btnCancelPassword.addEventListener('click', () => {
+      passwordModal.classList.add('opacity-0');
+      setTimeout(() => passwordModal.classList.add('hidden'), 300);
+    });
+
+    // 5. Password Validation Logic
+    function checkPassword() {
+      const entered = passwordInput.value.trim().toLowerCase().replace(/\s+/g, '');
+      
+      const isCorrect = CONFIG.validPasswords.some(valid => {
+        return entered === valid.toLowerCase().replace(/\s+/g, '');
+      });
+
+      if (isCorrect) {
+        // Correct Password!
+        Sound.playGavelThud();
+        Sound.playSuccessChime();
+        passwordModal.classList.add('opacity-0');
+        
+        setTimeout(() => {
+          passwordModal.classList.add('hidden');
+          goodBoySection.classList.add('hidden');
+          goodBoySection.classList.remove('flex');
+          
+          // Reveal Cat 4 (Approved!) and Envelope
+          successSection.classList.remove('hidden');
+          successSection.classList.add('flex');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          launchConfetti(window.innerWidth / 2, window.innerHeight / 3);
+        }, 300);
+
+      } else {
+        // Wrong Password -> Cat 3 ("pitti kr dungi 😡")
+        Sound.playBuzzer();
+        passwordModal.classList.add('opacity-0');
+        setTimeout(() => passwordModal.classList.add('hidden'), 200);
+
+        wrongPasswordModal.classList.remove('hidden');
+        setTimeout(() => {
+          wrongPasswordModal.classList.remove('opacity-0');
+          wrongPasswordCard.classList.add('shake-angry');
+        }, 20);
+      }
+    }
+
+    // Try Again on Cat 3 modal
+    btnTryAgain.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      wrongPasswordModal.classList.add('opacity-0');
+      setTimeout(() => {
+        wrongPasswordModal.classList.add('hidden');
+        wrongPasswordCard.classList.remove('shake-angry');
+        passwordModal.classList.remove('hidden');
+        setTimeout(() => {
+          passwordModal.classList.remove('opacity-0');
+          passwordInput.select();
+        }, 20);
+      }, 300);
+    });
+
+    // 6. Envelope Opening & Heart Burst
+    let envelopeOpened = false;
+    envelopeWrapper.addEventListener('click', () => {
+      if (envelopeOpened) {
+        openLetterDirectly();
+        return;
+      }
+      envelopeOpened = true;
+      Sound.playLetterOpenHarp();
+
+      // Flap flip animation
+      envelopeFlap.classList.add('open');
+      waxSeal.style.opacity = '0';
+      waxSeal.style.transform = 'scale(0)';
+
+      // Burst of floating hearts
+      const rect = envelopeWrapper.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      launchConfetti(originX, originY, true);
+
+      // Slide letter peek up
+      letterPeek.style.transform = 'translateY(-55px)';
+
+      // Open letter modal after animation completes
+      setTimeout(() => {
+        openLetterDirectly();
+      }, 950);
+    });
+
+    function openLetterDirectly() {
+      letterModal.classList.remove('hidden');
+      setTimeout(() => {
+        letterModal.classList.remove('opacity-0');
+        letterContainer.classList.remove('scale-95');
+        letterContainer.classList.add('scale-100');
+        launchConfetti(window.innerWidth / 2, window.innerHeight / 4);
+      }, 20);
+    }
+
+    // Close Letter Modal
+    btnCloseLetter.addEventListener('click', () => {
+      letterModal.classList.add('opacity-0');
+      letterContainer.classList.remove('scale-100');
+      letterContainer.classList.add('scale-95');
+      setTimeout(() => letterModal.classList.add('hidden'), 400);
+    });
+
+    // Helper: Reset Envelope visual fold
+    function resetEnvelopeState() {
+      envelopeOpened = false;
+      envelopeFlap.classList.remove('open');
+      waxSeal.style.opacity = '1';
+      waxSeal.style.transform = 'scale(1)';
+      letterPeek.style.transform = 'translateY(0px)';
+    }
+
+    // Helper: Return completely to the initial landing page
+    function resetToBeginning() {
+      Sound.playCuteBoing();
+      letterModal.classList.add('opacity-0');
+      letterContainer.classList.remove('scale-100');
+      letterContainer.classList.add('scale-95');
+      setTimeout(() => letterModal.classList.add('hidden'), 350);
+
+      successSection.classList.add('hidden');
+      successSection.classList.remove('flex');
+      goodBoySection.classList.add('hidden');
+      goodBoySection.classList.remove('flex');
+
+      if (passwordInput) passwordInput.value = '';
+      resetEnvelopeState();
+
+      heroSection.classList.remove('hidden');
+      optionsSection.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Back from success section (Approved / Envelope screen) -> Good Boy screen
+    btnBackFromSuccess.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      resetEnvelopeState();
+      successSection.classList.add('hidden');
+      successSection.classList.remove('flex');
+      goodBoySection.classList.remove('hidden');
+      goodBoySection.classList.add('flex');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Reset from success section to start
+    btnResetToStartFromSuccess.addEventListener('click', () => {
+      resetToBeginning();
+    });
+
+    // "Fold letter & go back" button inside the open letter modal
+    btnFoldLetter.addEventListener('click', () => {
+      Sound.playCuteBoing();
+      letterModal.classList.add('opacity-0');
+      letterContainer.classList.remove('scale-100');
+      letterContainer.classList.add('scale-95');
+      setTimeout(() => {
+        letterModal.classList.add('hidden');
+        resetEnvelopeState();
+      }, 400);
+    });
+
+    // "Replay from start" button inside the open letter modal
+    btnReplayFromLetter.addEventListener('click', () => {
+      resetToBeginning();
+    });
+
+    // In-browser quick letter editor
+    btnEditLetter.addEventListener('click', () => {
+      const current = userLetterText.textContent.trim();
+      const updated = prompt("Type or paste your personalized letter message:", current);
+      if (updated !== null && updated.trim() !== "") {
+        userLetterText.textContent = updated;
+        Sound.playCuteBoing();
+      }
+    });
+
+    /* ===================================================
+       CANVAS PARTICLES & CONFETTI BURST SYSTEM
+       =================================================== */
+    const canvas = document.getElementById('floatingCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    // Ambient floating hearts & stars
+    const ambientParticles = [];
+    for (let i = 0; i < 24; i++) {
+      ambientParticles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 12 + 8,
+        speedY: Math.random() * 0.4 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.35 + 0.15,
+        type: Math.random() > 0.4 ? 'heart' : 'star',
+        color: Math.random() > 0.5 ? '#F472B6' : '#93C5FD'
+      });
+    }
+
+    // Burst confetti particles (spawned on success or envelope click)
+    let burstParticles = [];
+
+    function launchConfetti(x, y, isHeartOnly = false) {
+      const colors = ['#F472B6', '#FB7185', '#FDA4AF', '#BAE6FD', '#FDE047'];
+      for (let i = 0; i < 45; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 7 + 3;
+        burstParticles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity - 2,
+          gravity: 0.18,
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.012,
+          size: Math.random() * 14 + 10,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10,
+          type: isHeartOnly ? 'heart' : (Math.random() > 0.5 ? 'heart' : 'ribbon')
+        });
+      }
+    }
+
+    function drawHeart(context, cx, cy, size, color, alpha) {
+      context.save();
+      context.globalAlpha = alpha;
+      context.fillStyle = color;
+      context.translate(cx, cy);
+      context.beginPath();
+      const topCurveHeight = size * 0.3;
+      context.moveTo(0, topCurveHeight);
+      // top left curve
+      context.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+      // bottom left curve
+      context.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, (size + topCurveHeight) / 1.4, 0, size);
+      // bottom right curve
+      context.bezierCurveTo(0, (size + topCurveHeight) / 1.4, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+      // top right curve
+      context.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+
+    function drawStar(context, cx, cy, spikes, outerRadius, innerRadius, color, alpha) {
+      context.save();
+      context.globalAlpha = alpha;
+      context.fillStyle = color;
+      context.translate(cx, cy);
+      let rot = Math.PI / 2 * 3;
+      let x = 0;
+      let y = 0;
+      const step = Math.PI / spikes;
+      context.beginPath();
+      context.moveTo(0, -outerRadius);
+      for (let i = 0; i < spikes; i++) {
+        x = Math.cos(rot) * outerRadius;
+        y = Math.sin(rot) * outerRadius;
+        context.lineTo(x, y);
+        rot += step;
+        x = Math.cos(rot) * innerRadius;
+        y = Math.sin(rot) * innerRadius;
+        context.lineTo(x, y);
+        rot += step;
+      }
+      context.lineTo(0, -outerRadius);
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+
+    function animateLoop() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Render Ambient Floating elements
+      ambientParticles.forEach(p => {
+        p.y -= p.speedY;
+        p.x += p.speedX;
+        if (p.y < -20) {
+          p.y = height + 20;
+          p.x = Math.random() * width;
+        }
+        if (p.type === 'heart') {
+          drawHeart(ctx, p.x, p.y, p.size, p.color, p.opacity);
+        } else {
+          drawStar(ctx, p.x, p.y, 4, p.size * 0.7, p.size * 0.3, p.color, p.opacity);
+        }
+      });
+
+      // Render Burst Particles
+      for (let i = burstParticles.length - 1; i >= 0; i--) {
+        const bp = burstParticles[i];
+        bp.x += bp.vx;
+        bp.y += bp.vy;
+        bp.vy += bp.gravity;
+        bp.alpha -= bp.decay;
+        bp.rotation += bp.vRot;
+
+        if (bp.alpha <= 0) {
+          burstParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(bp.x, bp.y);
+        ctx.rotate((bp.rotation * Math.PI) / 180);
+        if (bp.type === 'heart') {
+          drawHeart(ctx, 0, 0, bp.size, bp.color, bp.alpha);
+        } else {
+          ctx.fillStyle = bp.color;
+          ctx.globalAlpha = bp.alpha;
+          ctx.fillRect(-bp.size / 2, -bp.size / 4, bp.size, bp.size / 2);
+        }
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animateLoop);
+    }
+
+    // Start background animation loop
+    window.addEventListener('load', () => {
+      animateLoop();
+    });
+  </script>
+</body>
+</html>
